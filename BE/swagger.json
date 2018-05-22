@@ -1,0 +1,438 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "2.0.0",
+      "title": "Swagger"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "client",
+        "description": "Everything about your clients"
+      },
+      {
+        "name": "provider",
+        "description": "Everything about the providers"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/clients": {
+        "get": {
+          "tags": [
+            "client"
+          ],
+          "summary": "Get all the clients",
+          "description": "",
+          "operationId": "getclients",
+          "consumes": [
+            "application/json",
+            "application/xml"
+          ],
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Success Operation"
+            },
+            "400": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/client": {
+        "post": {
+          "tags": [
+            "client"
+          ],
+          "summary": "Add a new client to the store",
+          "description": "",
+          "operationId": "addclient",
+          "consumes": [
+            "application/json",
+            "application/xml"
+          ],
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "name",
+              "description": "client object that needs to be added to the store",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/client"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success Operation"
+            },
+            "400": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/client/{clientId}": {
+        "get": {
+          "tags": [
+            "client"
+          ],
+          "summary": "Find client by ID",
+          "description": "Returns a single client",
+          "operationId": "getclientById",
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "clientId",
+              "in": "path",
+              "description": "ID of client to return",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "$ref": "#/definitions/client"
+              }
+            },
+            "400": {
+              "description": "Invalid ID supplied"
+            },
+            "404": {
+              "description": "client not found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "client"
+          ],
+          "summary": "Updates a client in the provider with form data",
+          "description": "",
+          "operationId": "updateclientWithForm",
+          "consumes": [
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "clientId",
+              "in": "path",
+              "description": "ID of client that needs to be updated",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "name": "name",
+              "in": "formData",
+              "description": "Updated name of the client",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "status",
+              "in": "formData",
+              "description": "Updated status of the client",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "405": {
+              "description": "Invalid input"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "client"
+          ],
+          "summary": "Deletes a client",
+          "description": "",
+          "operationId": "deleteclient",
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "clientId",
+              "in": "path",
+              "description": "client id to delete",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            }
+          ],
+          "responses": {
+            "400": {
+              "description": "Invalid ID supplied"
+            },
+            "404": {
+              "description": "client not found"
+            }
+          }
+        }
+      },
+      "/providers": {
+        "get": {
+          "tags": [
+            "provider"
+          ],
+          "summary": "Get all the providers",
+          "description": "",
+          "operationId": "getproviders",
+          "consumes": [
+            "application/json",
+            "application/xml"
+          ],
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Success Operation"
+            },
+            "400": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/provider": {
+        "post": {
+          "tags": [
+            "provider"
+          ],
+          "summary": "Add a new provider to the store",
+          "description": "",
+          "operationId": "addprovider",
+          "consumes": [
+            "application/json",
+            "application/xml"
+          ],
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "name",
+              "description": "provider object that needs to be added to the store",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/provider"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success Operation"
+            },
+            "400": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/provider/{providerId}": {
+        "get": {
+          "tags": [
+            "provider"
+          ],
+          "summary": "Find provider by ID",
+          "description": "Returns a single provider",
+          "operationId": "getproviderById",
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "providerId",
+              "in": "path",
+              "description": "ID of provider to return",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "$ref": "#/definitions/provider"
+              }
+            },
+            "400": {
+              "description": "Invalid ID supplied"
+            },
+            "404": {
+              "description": "provider not found"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "provider"
+          ],
+          "summary": "Updates a provider in the provider with form data",
+          "description": "",
+          "operationId": "updateproviderWithForm",
+          "consumes": [
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "providerId",
+              "in": "path",
+              "description": "ID of provider that needs to be updated",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "name": "name",
+              "in": "formData",
+              "description": "Updated name of the provider",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "status",
+              "in": "formData",
+              "description": "Updated status of the provider",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "405": {
+              "description": "Invalid input"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "provider"
+          ],
+          "summary": "Deletes a provider",
+          "description": "",
+          "operationId": "deleteprovider",
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "providerId",
+              "in": "path",
+              "description": "provider id to delete",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            }
+          ],
+          "responses": {
+            "400": {
+              "description": "Invalid ID supplied"
+            },
+            "404": {
+              "description": "provider not found"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "client": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name"
+        ],
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "example": "doggie"
+          },
+          "email": {
+            "type": "string",
+            "example": "email.gmail.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "123-45678"
+          },
+          "providers": {
+            "type": "array",
+            "xml": {
+              "name": "prividerId",
+              "wrapped": true
+            },
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "xml": {
+          "name": "client"
+        }
+      },
+      "provider": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name"
+        ],
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "example": "provider1"
+          }
+        },
+        "xml": {
+          "name": "client"
+        }
+      }
+    },
+    "externalDocs": {
+      "description": " Swagger Help Doc",
+      "url": "http://swagger.io"
+    }
+  }

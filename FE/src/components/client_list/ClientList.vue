@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <p class="title">
-        Clinets
+        Clients
       </p>
       <b-btn class="rounded add-button" v-on:click="clearData" v-b-modal.modal1>New Client</b-btn>
     </div>
@@ -144,6 +144,12 @@
         );
         return item ? true : false;
       },
+      searchProviderNameToAdd: function(name) {
+        const item = this.allProviders.find(
+          provider => provider.name === name
+        );
+        return item ? true : false;
+      },
       getProviderNameWithId: function(providerId) {
         const currentProvider = this.allProviders.find(
           provider => provider._id === providerId
@@ -154,6 +160,7 @@
         this.isEditing = index;
       },
       editClient: function(event) {
+        this.updateProviders();
         event.preventDefault();
 
         if (!this.clientInfo.name) {
@@ -255,11 +262,22 @@
 
           const diff = _.difference(client.providers, this.allProviders.map(item => item._id));
           this.allData[index].providers = _.difference (client.providers, diff);
+
+          service.rest('client/' + this.allData[index]._id, 'put', this.allData[index])
+          .then(response => {
+
+          });
         });
       },
       onClickAddProvider: function() {
         if (this.providerName == '') {
           alert ("Input the Provider Name");
+          return;
+        }
+
+        if(this.searchProviderNameToAdd(this.providerName)) {
+          alert ("This provider exists! Input anoter name.");
+          this.providerName = '';
           return;
         }
 
@@ -278,7 +296,26 @@
         this.providerName = '';
       },
       onEndEditingProvider: function(index) {
+        if(this.isEditing === -1) return;
         this.isEditing = -1;
+
+        let searchResult = false;
+        this.allProviders.forEach((item, idx) => {
+          if (index !== idx && item.name === this.allProviders[index].name) {
+            searchResult = true;
+          }        
+        });
+
+        if (searchResult) {
+          service.rest('providers', 'get')
+          .then(response => {
+            this.allProviders = response;
+            alert('It should be different from others.');
+            return;
+          });
+          return;
+        }
+
         service.rest('provider/' + this.allProviders[index]._id, 'put', this.allProviders[index])
         .then(response => {
 
